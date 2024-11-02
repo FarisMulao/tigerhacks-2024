@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Typography,
-  IconButton,
-} from "@mui/material";
+import { Box, Button, Card, CardContent, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ImageIcon from "@mui/icons-material/Image";
 import Navbar from "../components/Navbar";
@@ -25,9 +18,31 @@ function UploadPage(props: Props) {
     }
   };
 
+  async function sendImageToBackend(imageFile: File) {
+    const formData = new FormData();
+    formData.append("image", imageFile);
+
+    try {
+      const response = await fetch("http://192.168.88.64:5000/upload", {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error(`status: ${response.status}`);
+      }
+
+      const result = await response.text();
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.error("Error sending image:", error);
+    }
+  }
+
   const handleSubmit = () => {
     if (selectedImage) {
       console.log("Submitting image to backend:", selectedImage);
+      sendImageToBackend(selectedImage);
     } else {
       console.log("No image selected");
     }
@@ -43,7 +58,15 @@ function UploadPage(props: Props) {
         minHeight="100vh"
         bgcolor="#f7f9fc"
       >
-        <Card sx={{ padding: 4, boxShadow: 3, borderRadius: 2, maxWidth: 400 }}>
+        <Card
+          sx={{
+            padding: 4,
+            boxShadow: 3,
+            borderRadius: 2,
+            maxWidth: 400,
+            minWidth: 400,
+          }}
+        >
           <CardContent>
             <Typography
               variant="h5"
