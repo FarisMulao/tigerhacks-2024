@@ -34,7 +34,7 @@ const LogInPage = () => {
             </Typography>
 
             <TextField
-              label="Email"
+              label="Username"
               variant="outlined"
               fullWidth
               sx={{
