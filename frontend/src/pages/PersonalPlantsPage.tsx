@@ -16,7 +16,7 @@ function PersonalPlantsPage() {
 
   async function fetchPlants() {
     try {
-      const response = await fetch("/getPlantsData", {
+      const response = await fetch("/getUserPlants", {
         method: "GET",
       });
       if (!response.ok) {

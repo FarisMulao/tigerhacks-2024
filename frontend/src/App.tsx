@@ -7,12 +7,10 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 
 function App() {
-  const [user, setUser] = useState<any | null>(null);
   const [userInfo, setUserInfo] = useState<{
     email: string;
     name: string;
   } | null>(null);
-  const [userName, setUserName] = useState<any | null>(null);
 
   async function getUserInfo() {
     let headers = new Headers();
