@@ -50,5 +50,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "proxy": {
+    "/login": {
+      "target": "http://localhost:5000",
+      "changeOrigin": true
+    },
+    "/uploadimage": {
+      "target": "http://localhost:5000",
+      "changeOrigin": true
+    }
   }
 }

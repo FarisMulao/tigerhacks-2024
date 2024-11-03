@@ -55,7 +55,7 @@ function UploadPage(props: Props) {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        minHeight="100vh"
+        minHeight="calc(100vh - 64px)"
         bgcolor="#f7f9fc"
       >
         <Card
