@@ -162,11 +162,11 @@ def uploadImage():
     #print("HERE", request.files)
     if 'image' not in request.files:
         print("No file found in request.")
-        return 'file not found', 406  #Changed format to ('message', status code)
+        return 'file not found', 406  
     file = request.files['image']
     if file.filename == '':
         print("No file uploaded")
-        return 'no file uploaded', 406  #Changed format to ('message', status code)
+        return 'no file uploaded', 406  
 
     # Save file with `file.filename` instead of `filename`
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
@@ -180,13 +180,12 @@ def uploadImage():
     print(testimg.shape)
     testimg = np.reshape(testimg, (1, 256, 256, 3))
 
-    test = model2.serve(testimg)  # <-- Ensure this is the correct way to call model2
-
+    test = model2.serve(testimg)  
+    test1 = model2.serve(testimg)
+    test2 = model2.serve(testimg)
+    output = random.choice([int(np.argmax(test)), int(np.argmax(test1)), int(np.argmax(test2))])
     # Return based on model output
-    if np.max(test) > 0.4:
-        return str(int(np.argmax(test))), 200  # <-- Changed format to (response, status code)
-    else:
-        return "100", 200  # Changed format to (response, status code)
+    return str(output), 200 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=env.get("PORT", 5000))
