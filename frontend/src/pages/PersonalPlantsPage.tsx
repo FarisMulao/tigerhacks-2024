@@ -24,7 +24,7 @@ function PersonalPlantsPage() {
       }
 
       const data = await response.json();
-
+      console.log(data);
       const fetchedPlants = data.plantData.map((item: any) => ({
         commonName: item.commonName,
         scientificName: item.scientificName,
@@ -33,7 +33,7 @@ function PersonalPlantsPage() {
         lightNeeds: item.lightNeeds,
         lastWateredDate: item.startdate,
       }));
-
+      console.log(fetchedPlants);
       setPlants(fetchedPlants);
     } catch (error) {
       console.error("Error fetching plant data:", error);

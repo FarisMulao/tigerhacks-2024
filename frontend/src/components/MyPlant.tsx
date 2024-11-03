@@ -38,8 +38,8 @@ const MyPlant: React.FC<{ plant: Plant }> = ({ plant }) => {
   return (
     <Card
       sx={{
-        width: "70vw", // Set the width to 70% of the viewport
-        height: "50px", // Fixed height of 30px
+        width: "70vw",
+        height: "50px",
         mx: "auto",
         my: 2,
         display: "flex",
@@ -50,7 +50,6 @@ const MyPlant: React.FC<{ plant: Plant }> = ({ plant }) => {
         borderRadius: 2,
       }}
     >
-      {/* Plant Icon and Name */}
       <Box display="flex" alignItems="center" gap={1}>
         <Avatar sx={{ bgcolor: "green", width: 24, height: 24 }}>
           <LocalFloristIcon fontSize="small" />
@@ -60,13 +59,11 @@ const MyPlant: React.FC<{ plant: Plant }> = ({ plant }) => {
         </Typography>
       </Box>
 
-      {/* Light Needs */}
       <Box display="flex" alignItems="center" gap={0.5}>
         <Brightness7Icon fontSize="small" />
         <Typography variant="body2">Light: {lightNeeds}</Typography>
       </Box>
 
-      {/* Watering Schedules */}
       <Box display="flex" alignItems="center" gap={1}>
         <OpacityIcon fontSize="small" />
         <Typography variant="body2">
@@ -78,7 +75,6 @@ const MyPlant: React.FC<{ plant: Plant }> = ({ plant }) => {
         </Typography>
       </Box>
 
-      {/* Watering Chip as a Right-Aligned Banner */}
       <Chip
         label={
           wateringDue
@@ -89,7 +85,7 @@ const MyPlant: React.FC<{ plant: Plant }> = ({ plant }) => {
         }
         color={wateringDue ? "primary" : "default"}
         sx={{
-          height: "30px", // Fixed height of 30px for the banner look
+          height: "30px",
           bgcolor: wateringDue ? "primary.main" : "grey.300",
           color: wateringDue ? "white" : "text.secondary",
           fontWeight: "bold",
