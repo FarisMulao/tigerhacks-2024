@@ -115,17 +115,6 @@ const Navbar = ({ email, name }: Props) => {
           ) : (
             <>
               <Button
-                onClick={() => (window.location.href = "/signup")}
-                sx={{
-                  color: "#000",
-                  "&:hover": { color: "#1976d2" },
-                  fontWeight: "bold",
-                  marginRight: 2,
-                }}
-              >
-                Sign Up
-              </Button>
-              <Button
                 onClick={() => (window.location.href = "/login")}
                 sx={{
                   backgroundColor: "#000",

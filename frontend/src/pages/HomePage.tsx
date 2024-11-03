@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Card, CardContent, Typography, Button } from "@mui/material";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Navbar from "../components/Navbar";
 import plant1 from "../components/images/stock-plant-1.jpg";
 import plant2 from "../components/images/stock-plant-2.jpg";
 import plant3 from "../components/images/stock-plant-3.jpg";
@@ -41,8 +40,16 @@ const HomePage: React.FC = () => {
             <Button
               variant="contained"
               color="primary"
-              sx={{ borderRadius: "8px", padding: "10px 20px", mb: 2 }}
-              href="/signup"
+              sx={{
+                backgroundColor: "#000",
+                color: "#fff",
+                padding: "6px 16px",
+                borderRadius: "8px",
+                "&:hover": { backgroundColor: "#333" },
+                m: 2,
+                mb: 2,
+              }}
+              href="/login"
             >
               Get Started
             </Button>

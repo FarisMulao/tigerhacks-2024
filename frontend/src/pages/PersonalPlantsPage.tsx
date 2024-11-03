@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import MyPlant from "../components/MyPlant";
-import Navbar from "../components/Navbar";
 import { Box, Typography } from "@mui/material";
 
 interface Plant {
