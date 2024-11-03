@@ -16,9 +16,9 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/index.html" element={<Navigate to="/" />} />
-        <Route path="/profile/:userid" element={<ProfilePage></ProfilePage>} />
+        <Route path="/profile" element={<ProfilePage></ProfilePage>} />
         <Route
-          path="/myplants/:userid"
+          path="/myplants"
           element={<PersonalPlantsPage></PersonalPlantsPage>}
         />
         <Route path="/upload" element={<UploadPage></UploadPage>} />
