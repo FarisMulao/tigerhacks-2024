@@ -53,11 +53,11 @@
   },
   "proxy": {
     "/login": {
-      "target": "http://localhost:5000",
+      "target": "http://localhost:5000/login",
       "changeOrigin": true
     },
     "/uploadimage": {
-      "target": "http://localhost:5000",
+      "target": "http://localhost:5000/uploadimage",
       "changeOrigin": true
     }
   }
