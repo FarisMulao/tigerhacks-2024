@@ -159,7 +159,6 @@ function UploadPage({ email, name }: Props) {
 
   return (
     <div>
-      <Navbar></Navbar>
       <Box
         display="flex"
         justifyContent="center"

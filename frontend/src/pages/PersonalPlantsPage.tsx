@@ -25,7 +25,6 @@ function PersonalPlantsPage() {
 
   return (
     <div>
-      <Navbar />
       <Box
         display="flex"
         flexDirection="column"

@@ -54,7 +54,7 @@ function App() {
 
   return (
     <div className="App">
-      {false && <Navbar email={userInfo?.email} name={userInfo?.name}></Navbar>}
+      <Navbar email={userInfo?.email} name={userInfo?.name}></Navbar>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/index.html" element={<Navigate to="/" />} />

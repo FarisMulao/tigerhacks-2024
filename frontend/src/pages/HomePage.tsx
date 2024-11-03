@@ -10,7 +10,6 @@ import plant3 from "../components/images/stock-plant-3.jpg";
 const HomePage: React.FC = () => {
   return (
     <div>
-      <Navbar />
       <Box
         display="flex"
         flexDirection="column"
