@@ -11,6 +11,7 @@ import tensorflow as tf
 from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, redirect, render_template, session, url_for
+import mysql.connector
 
 model2 = tf.saved_model.load("modelexport")
 
@@ -20,6 +21,15 @@ if ENV_FILE:
 
 app = Flask(__name__)
 app.secret_key = env.get("APP_SECRET_KEY")
+
+
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="plidbackend",
+  password="password",
+  database="pliddb"
+)
 
 
 oauth = OAuth(app)
@@ -88,7 +98,56 @@ def getUserInfo():
     except Exception as e:
         print(e)
         return "", 204
+        
+@app.route('/getUserPlants', methods=['GET'])
+def getUserPlants():
+    try:
+        email = session.get("user")['userinfo']['name']
+    except:
+        return "", 403
+    try:
+        cursor = mydb.cursor()
+        cursor.execute("SELECT (plantid, planttype, startdate) FROM plantList WHERE email = %s", email)
+        data = cursor.fetchall()
+    except:
+        return "database error", 500
+    if len(data) == 0:
+        return "", 204
+    plantData = {}
+    plantData['plantData'] = []
+    for plant in data:
+        plants = {}
+        plants["plantid"] = plant[0]
+        plants["planttype"] = plant[1]
+        plants["startdate"] = plant[2]
+        plantsData['plantData'].append(plants)
+    return plantData, 200
+
+@app.route('/addUserPlant', methods=['POST'])
+def addUserPlant():
+    try:
+        email = session.get("user")['userinfo']['name']
+    except:
+        return "", 403
+        
+    try:
+        form = request.form
+        formKeys = form.keys()
+        if not ("planttype" in formKeys):
+            return "Invalid input", 400
+        planttype = form['planttype']
+    except:
+        return "", 500
     
+    if planttype is None:
+        return "Invalid input, none", 400
+    
+    try:
+        cursor = mydb.cursor()
+        cursor.execute("INSERT INTO plantlist (email, planttype, startdate, plantid) VALUES (%s, %s, NOW(), UUID())", email, planttype)
+        mydb.commit()
+    except Exception as e:
+        return "database error", 500
 
 @app.route('/upload', methods=['POST'])
 def uploadImage():
