@@ -22,7 +22,20 @@ const isWateringDay = (lastWateredDate: string, interval: number) => {
   return diffDays >= interval;
 };
 
-const MyPlant: React.FC<{ plant: Plant }> = ({ plant }) => {
+const calculateDaysUntilNextWatering = (
+  lastWateredDate: string,
+  interval: number
+) => {
+  const today = new Date();
+  const lastWatered = new Date(lastWateredDate);
+  const diffDays = Math.floor(
+    (today.getTime() - lastWatered.getTime()) / (1000 * 60 * 60 * 24)
+  );
+  const daysUntilNextWatering = interval - (diffDays % interval);
+  return daysUntilNextWatering;
+};
+
+function MyPlant(props: { plant: Plant }) {
   const {
     commonName,
     scientificName,
@@ -30,10 +43,18 @@ const MyPlant: React.FC<{ plant: Plant }> = ({ plant }) => {
     wateringScheduleWinter,
     lightNeeds,
     lastWateredDate,
-  } = plant;
+  } = props.plant;
 
-  const wateringInterval = wateringScheduleSummer;
+  // Determine watering interval based on season
+  const month = new Date().getMonth();
+  const wateringInterval =
+    month >= 5 && month <= 8 ? wateringScheduleSummer : wateringScheduleWinter;
+
   const wateringDue = isWateringDay(lastWateredDate, wateringInterval);
+  const daysUntilNextWatering = calculateDaysUntilNextWatering(
+    lastWateredDate,
+    wateringInterval
+  );
 
   return (
     <Card
@@ -79,9 +100,7 @@ const MyPlant: React.FC<{ plant: Plant }> = ({ plant }) => {
         label={
           wateringDue
             ? "Water me!"
-            : `Next watering in ${
-                wateringInterval - (new Date().getDate() % wateringInterval)
-              } days`
+            : `Next watering in ${daysUntilNextWatering} days`
         }
         color={wateringDue ? "primary" : "default"}
         sx={{
@@ -94,6 +113,6 @@ const MyPlant: React.FC<{ plant: Plant }> = ({ plant }) => {
       />
     </Card>
   );
-};
+}
 
 export default MyPlant;
