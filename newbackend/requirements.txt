@@ -6,3 +6,4 @@ requests>=2.27.1
 Pillow
 cffi
 mysql-connector-python
+flask_cors

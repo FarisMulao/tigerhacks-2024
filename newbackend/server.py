@@ -10,8 +10,10 @@ from keras.layers import *
 import tensorflow as tf
 from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
-from flask import Flask, redirect, render_template, session, url_for
+from flask import Flask, redirect, render_template, session, url_for, request
 import mysql.connector
+import numpy as np 
+from flask_cors import CORS
 
 model2 = tf.saved_model.load("modelexport")
 
@@ -21,15 +23,16 @@ if ENV_FILE:
 
 app = Flask(__name__)
 app.secret_key = env.get("APP_SECRET_KEY")
+app.config['UPLOAD_FOLDER'] = "./uploads"
+CORS(app)
 
 
-
-#mydb = mysql.connector.connect(
-#  host="localhost",
-#  user="plidbackend",
-#  password="password",
-#  database="pliddb"
-#)
+mydb = mysql.connector.connect(
+  host="host.docker.internal",
+  user="plidbackend",
+  password="password",
+  database="pliddb"
+)
 
 
 oauth = OAuth(app)
