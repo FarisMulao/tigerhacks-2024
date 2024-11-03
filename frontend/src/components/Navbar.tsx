@@ -15,6 +15,8 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("user");
+  const [email, setEmail] = useState("test@email.com");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -74,8 +76,8 @@ const Navbar = () => {
 
                 <IconButton onClick={handleProfileClick} sx={{ padding: 0 }}>
                   <Avatar
-                    alt="Profile"
-                    src="/path/to/profile-picture.jpg" // Placeholder, replace with actual profile picture source
+                    alt={username}
+                    src="/path/to/profile-picture.jpg"
                     sx={{ width: 36, height: 36 }}
                   />
                 </IconButton>
@@ -92,13 +94,8 @@ const Navbar = () => {
                     horizontal: "right",
                   }}
                 >
-                  <MenuItem
-                    component={Link}
-                    to="/profile"
-                    onClick={handleClose}
-                  >
-                    Profile
-                  </MenuItem>
+                  <MenuItem onClick={handleClose}>{username}</MenuItem>
+                  <MenuItem onClick={handleClose}>{email}</MenuItem>
                   <MenuItem
                     onClick={() => {
                       setIsLoggedIn(false);

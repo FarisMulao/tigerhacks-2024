@@ -6,9 +6,93 @@ import Navbar from "../components/Navbar";
 
 interface Props {}
 
+const plantData = [
+  {
+    commonName: "African Violet",
+    scientificName: "Saintpaulia Ionatha",
+    wateringScheduleSummer: 7,
+    wateringScheduleWinter: 14,
+    lightNeeds: "Indirect sunlight",
+    lastWateredDate: "2024-10-25",
+  },
+  {
+    commonName: "Aloe Vera",
+    scientificName: "Aloe Vera",
+    wateringScheduleSummer: 7,
+    wateringScheduleWinter: 14,
+    lightNeeds: "Direct sunlight",
+    lastWateredDate: "2024-10-25",
+  },
+  {
+    commonName: "Anthurium",
+    scientificName: "Anthurium Andraeanum",
+    wateringScheduleSummer: 9,
+    wateringScheduleWinter: 12,
+    lightNeeds: "Indirect sunlight",
+    lastWateredDate: "2024-10-25",
+  },
+  {
+    commonName: "Bird of Paradise",
+    scientificName: "Strelitzia reginae",
+    wateringScheduleSummer: 5,
+    wateringScheduleWinter: 10,
+    lightNeeds: "Bright, direct sunlight",
+    lastWateredDate: "2024-10-25",
+  },
+  {
+    commonName: "Boston Fern",
+    scientificName: "Nephrolepis exaltata",
+    wateringScheduleSummer: 5,
+    wateringScheduleWinter: 7,
+    lightNeeds: "Indirect sunlight",
+    lastWateredDate: "2024-10-25",
+  },
+  {
+    commonName: "Chinese Money Plant",
+    scientificName: "",
+    wateringScheduleSummer: 7,
+    wateringScheduleWinter: 14,
+    lightNeeds: "Bright, indirect sunlight",
+    lastWateredDate: "2024-10-25",
+  },
+  {
+    commonName: "Monstera Deliciosa",
+    scientificName: "Monstera Deliciosa",
+    wateringScheduleSummer: 10,
+    wateringScheduleWinter: 14,
+    lightNeeds: "Bright, indirect sunlight",
+    lastWateredDate: "2024-10-25",
+  },
+  {
+    commonName: "Poinsettia",
+    scientificName: "",
+    wateringScheduleSummer: 5,
+    wateringScheduleWinter: 7,
+    lightNeeds: "Indirect sunlight",
+    lastWateredDate: "2024-10-25",
+  },
+  {
+    commonName: "Prayer Plant",
+    scientificName: "",
+    wateringScheduleSummer: 7,
+    wateringScheduleWinter: 10,
+    lightNeeds: "Low to moderate light",
+    lastWateredDate: "2024-10-25",
+  },
+  {
+    commonName: "Tradescantia",
+    scientificName: "",
+    wateringScheduleSummer: 7,
+    wateringScheduleWinter: 10,
+    lightNeeds: "Bright, indirect sunlight",
+    lastWateredDate: "2024-10-25",
+  },
+];
+
 function UploadPage(props: Props) {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [plantID, setPlantID] = useState<number | null>(null);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -39,10 +123,11 @@ function UploadPage(props: Props) {
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (selectedImage) {
       console.log("Submitting image to backend:", selectedImage);
-      sendImageToBackend(selectedImage);
+      const id = await sendImageToBackend(selectedImage);
+      setPlantID(Number(id));
     } else {
       console.log("No image selected");
     }
@@ -65,6 +150,7 @@ function UploadPage(props: Props) {
             borderRadius: 2,
             maxWidth: 400,
             minWidth: 400,
+            mt: -10,
           }}
         >
           <CardContent>
@@ -161,6 +247,15 @@ function UploadPage(props: Props) {
             >
               Submit Image
             </Button>
+
+            {plantID !== null && (
+              <Box mt={4}>
+                <Typography variant="h6" fontWeight="bold">
+                  Your plant has been identified as{" "}
+                  {plantData[plantID].commonName}
+                </Typography>
+              </Box>
+            )}
           </CardContent>
         </Card>
       </Box>
