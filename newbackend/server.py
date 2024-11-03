@@ -24,12 +24,12 @@ app.secret_key = env.get("APP_SECRET_KEY")
 
 
 
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="plidbackend",
-  password="password",
-  database="pliddb"
-)
+#mydb = mysql.connector.connect(
+#  host="localhost",
+#  user="plidbackend",
+#  password="password",
+#  database="pliddb"
+#)
 
 
 oauth = OAuth(app)
@@ -149,9 +149,9 @@ def addUserPlant():
     except Exception as e:
         return "database error", 500
 
-@app.route('/upload', methods=['POST'])
+@app.route('/uploadimage', methods=['POST'])
 def uploadImage():
-    print("HERE", request.files)
+    #print("HERE", request.files)
     if 'image' not in request.files:
         print("No file found in request.")
         return 'file not found', 406  #Changed format to ('message', status code)
