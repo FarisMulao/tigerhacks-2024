@@ -111,7 +111,7 @@ function UploadPage({ email, name }: Props) {
     formData.append("image", imageFile);
 
     try {
-      const response = await fetch("www.plid.us/uploadimage", {
+      const response = await fetch("/uploadimage", {
         method: "POST",
         body: formData,
       });
@@ -139,7 +139,7 @@ function UploadPage({ email, name }: Props) {
 
   async function addUserPlant(plantId: number) {
     try {
-      const response = await fetch("www.plid.us/addUserPlant", {
+      const response = await fetch("/addUserPlant", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
