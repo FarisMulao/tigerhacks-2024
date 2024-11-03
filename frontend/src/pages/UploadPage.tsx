@@ -112,7 +112,7 @@ function UploadPage({ email, name }: Props) {
     formData.append("image", imageFile);
 
     try {
-      const response = await fetch("http://localhost:5000/upload", {
+      const response = await fetch("http://localhost:5000/uploadimage", {
         method: "POST",
         body: formData,
       });
