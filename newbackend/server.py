@@ -184,7 +184,9 @@ def uploadImage():
     test = model2.serve(testimg)  
     test1 = model2.serve(testimg)
     test2 = model2.serve(testimg)
-    output = random.choice([int(np.argmax(test)), int(np.argmax(test1)), int(np.argmax(test2))])
+    test3 = model2.serve(testimg)
+    test4 = model2.serve(testimg)
+    output = random.choice([int(np.argmax(test)), int(np.argmax(test1)), int(np.argmax(test2)), int(np.argmax(test3)), int(np.argmax(test4))])
     # Return based on model output
     return str(output), 200 
 
