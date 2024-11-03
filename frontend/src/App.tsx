@@ -10,7 +10,10 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [user, setUser] = useState<any | null>(null);
-  const [userInfo, setUserInfo] = useState<any | null>(null);
+  const [userInfo, setUserInfo] = useState<{
+    email: string;
+    name: string;
+  } | null>(null);
   const [userName, setUserName] = useState<any | null>(null);
 
   async function getUserInfo() {
@@ -58,7 +61,15 @@ function App() {
           path="/myplants"
           element={<PersonalPlantsPage></PersonalPlantsPage>}
         />
-        <Route path="/upload" element={<UploadPage></UploadPage>} />
+        <Route
+          path="/upload"
+          element={
+            <UploadPage
+              email={userInfo?.email}
+              name={userInfo?.name}
+            ></UploadPage>
+          }
+        />
         <Route path="/signup" element={<SignUpPage></SignUpPage>} />
         <Route path="/login" element={<LogInPage></LogInPage>} />
       </Routes>

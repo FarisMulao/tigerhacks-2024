@@ -5,7 +5,10 @@ import ImageIcon from "@mui/icons-material/Image";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 
-interface Props {}
+interface Props {
+  email?: string;
+  name?: string;
+}
 
 const plantData = [
   {
@@ -90,7 +93,7 @@ const plantData = [
   },
 ];
 
-function UploadPage(props: Props) {
+function UploadPage({ email, name }: Props) {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [plantID, setPlantID] = useState<number | null>(null);
@@ -175,6 +178,14 @@ function UploadPage(props: Props) {
           }}
         >
           <CardContent>
+            <Typography
+              variant="h5"
+              align="center"
+              fontWeight="bold"
+              gutterBottom
+            >
+              {name} and {email}
+            </Typography>
             <Typography
               variant="h5"
               align="center"
