@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import GrassIcon from "@mui/icons-material/Grass";
 import {
   AppBar,
@@ -20,6 +20,11 @@ interface Props {
 
 const Navbar = ({ email, name }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [loggedIn, setLoggedIn] = useState(Boolean(email && name));
+
+  useEffect(() => {
+    setLoggedIn(Boolean(email && name));
+  }, [email, name]);
 
   const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -28,8 +33,6 @@ const Navbar = ({ email, name }: Props) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const isLoggedIn = Boolean(email && name);
 
   return (
     <AppBar
@@ -50,7 +53,7 @@ const Navbar = ({ email, name }: Props) => {
         </Box>
 
         <Box display="flex" alignItems="center">
-          {isLoggedIn ? (
+          {loggedIn ? (
             <>
               <Button
                 component={Link}
