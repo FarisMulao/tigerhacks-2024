@@ -32,4 +32,20 @@ module.exports = function (app) {
       changeOrigin: true,
     })
   );
+  
+  app.use(
+    "/addUserPlant",
+    createProxyMiddleware({
+      target: "http://localhost:5000/",
+      changeOrigin: true,
+    })
+  );
+  
+  app.use(
+    "/getUserPlants",
+    createProxyMiddleware({
+      target: "http://localhost:5000/",
+      changeOrigin: true,
+    })
+  );
 };
