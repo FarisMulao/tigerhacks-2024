@@ -1,29 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MyPlant from "../components/MyPlant";
 import Navbar from "../components/Navbar";
 import { Box, Typography } from "@mui/material";
 
-const samplePlant = {
-  commonName: "Aloe Vera",
-  scientificName: "Aloe Vera",
-  wateringScheduleSummer: 7,
-  wateringScheduleWinter: 14,
-  lightNeeds: "Direct sunlight",
-  lastWateredDate: "2024-10-25", // Format as needed, or change to Date type if preferred
-};
+interface Plant {
+  commonName: string;
+  scientificName: string;
+  wateringScheduleSummer: number;
+  wateringScheduleWinter: number;
+  lightNeeds: string;
+  lastWateredDate: string;
+}
 
-const samplePlant2 = {
-  commonName: "Laceleaf",
-  scientificName: "Anthurium",
-  wateringScheduleSummer: 9,
-  wateringScheduleWinter: 12,
-  lightNeeds: "Indirect sunlight",
-  lastWateredDate: "2024-10-25", // Format as needed, or change to Date type if preferred
-};
+function PersonalPlantsPage() {
+  const [plants, setPlants] = useState<Plant[]>([]);
 
-interface Props {}
+  // Load plants from session storage on component mount
+  useEffect(() => {
+    const savedPlants = JSON.parse(
+      sessionStorage.getItem("savedPlants") || "[]"
+    );
+    setPlants(savedPlants);
+  }, []);
 
-function PersonalPlantsPage(props: Props) {
   return (
     <div>
       <Navbar />
@@ -38,11 +37,17 @@ function PersonalPlantsPage(props: Props) {
         <Typography
           variant="h4"
           sx={{ fontWeight: "bold", color: "#000", textDecoration: "none" }}
+          gutterBottom
         >
           My Plants
         </Typography>
-        <MyPlant plant={samplePlant} />
-        <MyPlant plant={samplePlant2} />
+        {plants.length > 0 ? (
+          plants.map((plant, index) => <MyPlant key={index} plant={plant} />)
+        ) : (
+          <Typography variant="body1" color="textSecondary">
+            No plants saved yet.
+          </Typography>
+        )}
       </Box>
     </div>
   );

@@ -3,6 +3,7 @@ import { Box, Button, Card, CardContent, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ImageIcon from "@mui/icons-material/Image";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 interface Props {}
 
@@ -93,6 +94,7 @@ function UploadPage(props: Props) {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [plantID, setPlantID] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -130,6 +132,25 @@ function UploadPage(props: Props) {
       setPlantID(Number(id));
     } else {
       console.log("No image selected");
+    }
+  };
+
+  const keepPlant = () => {
+    if (plantID !== null) {
+      const plantInfo = plantData[plantID];
+
+      const existingPlants = JSON.parse(
+        sessionStorage.getItem("savedPlants") || "[]"
+      );
+
+      existingPlants.push({
+        ...plantInfo,
+        lastWateredDate: new Date().toISOString().split("T")[0],
+      });
+
+      sessionStorage.setItem("savedPlants", JSON.stringify(existingPlants));
+
+      navigate("/myplants");
     }
   };
 
@@ -249,13 +270,13 @@ function UploadPage(props: Props) {
             </Button>
 
             {plantID !== null && (
-              <Box mt={4}>
-                <Typography variant="h6" fontWeight="bold">
-                  Your plant has been identified as{" "}
-                  {plantData[plantID].commonName}
-                </Typography>
-              </Box>
-            )}
+                <Box mt={4}>
+                  <Typography variant="h6" fontWeight="bold">
+                    Your plant has been identified as{" "}
+                    {plantData[plantID].commonName}
+                  </Typography>
+                </Box>
+              ) && <Button onClick={() => keepPlant()}>Keep Plant</Button>}
           </CardContent>
         </Card>
       </Box>

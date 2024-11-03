@@ -4,7 +4,7 @@ module.exports = function (app) {
   app.use(
     "/login",
     createProxyMiddleware({
-      target: "http://localhost:5000/upload",
+      target: "http://localhost:5000/",
       changeOrigin: true,
     })
   );
@@ -12,7 +12,7 @@ module.exports = function (app) {
   app.use(
     "/upload",
     createProxyMiddleware({
-      target: "http://localhost:5000/upload",
+      target: "http://localhost:5000/",
       changeOrigin: true,
     })
   );
