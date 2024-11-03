@@ -285,7 +285,22 @@ function UploadPage({ email, name }: Props) {
                   Your plant has been identified as{" "}
                   {plantData[plantID].commonName}
                 </Typography>
-                <Button onClick={keepPlant}>Keep Plant</Button>
+                <Button
+                  onClick={() => keepPlant()}
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    backgroundColor: "#000",
+                    color: "#fff",
+                    padding: "6px 16px",
+                    borderRadius: "8px",
+                    "&:hover": { backgroundColor: "#333" },
+                    m: 2,
+                    mb: 2,
+                  }}
+                >
+                  Keep Plant
+                </Button>
               </Box>
             )}
           </CardContent>
