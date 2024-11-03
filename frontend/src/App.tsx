@@ -1,5 +1,3 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
@@ -11,6 +9,45 @@ import ProfilePage from "./pages/ProfilePage";
 import { useEffect, useState } from "react";
 
 function App() {
+  const [user, setUser] = useState<any | null>(null);
+  const [userInfo, setUserInfo] = useState<any | null>(null);
+  const [userName, setUserName] = useState<any | null>(null);
+
+  async function getUserInfo() {
+    let headers = new Headers();
+
+    let data = await fetch("https://www.plid.us/getUserInfo", {
+      method: "GET",
+      headers: headers,
+      credentials: "include",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch user information");
+        }
+        return response.json();
+      })
+      .then((json) => {
+        console.log(json);
+        const userInfo = {
+          name: json.name,
+          email: json.email,
+        };
+        return userInfo;
+      })
+      .catch((error) => {
+        console.error(error);
+        return null;
+      });
+
+    setUserInfo(data);
+    console.log(userInfo);
+  }
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
   return (
     <div className="App">
       <Routes>
