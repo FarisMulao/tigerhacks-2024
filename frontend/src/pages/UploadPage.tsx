@@ -161,6 +161,7 @@ function UploadPage({ email, name }: Props) {
   const keepPlant = () => {
     if (plantID !== null) {
       addUserPlant(plantID);
+      navigate("/myplants");
     }
   };
 
