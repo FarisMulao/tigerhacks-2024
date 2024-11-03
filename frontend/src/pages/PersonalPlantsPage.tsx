@@ -14,12 +14,34 @@ interface Plant {
 function PersonalPlantsPage() {
   const [plants, setPlants] = useState<Plant[]>([]);
 
-  // Load plants from session storage on component mount
+  async function fetchPlants() {
+    try {
+      const response = await fetch("/getPlantsData", {
+        method: "GET",
+      });
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      const fetchedPlants = data.plantData.map((item: any) => ({
+        commonName: item.commonName,
+        scientificName: item.scientificName,
+        wateringScheduleSummer: item.wateringScheduleSummer,
+        wateringScheduleWinter: item.wateringScheduleWinter,
+        lightNeeds: item.lightNeeds,
+        lastWateredDate: item.startdate,
+      }));
+
+      setPlants(fetchedPlants);
+    } catch (error) {
+      console.error("Error fetching plant data:", error);
+    }
+  }
+
   useEffect(() => {
-    const savedPlants = JSON.parse(
-      sessionStorage.getItem("savedPlants") || "[]"
-    );
-    setPlants(savedPlants);
+    fetchPlants();
   }, []);
 
   return (
