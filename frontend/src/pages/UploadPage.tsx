@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Box, Button, Card, CardContent, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ImageIcon from "@mui/icons-material/Image";
-import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
@@ -138,22 +137,30 @@ function UploadPage({ email, name }: Props) {
     }
   };
 
-  const keepPlant = () => {
-    if (plantID !== null) {
-      const plantInfo = plantData[plantID];
-
-      const existingPlants = JSON.parse(
-        sessionStorage.getItem("savedPlants") || "[]"
-      );
-
-      existingPlants.push({
-        ...plantInfo,
-        lastWateredDate: new Date().toISOString().split("T")[0],
+  async function addUserPlant(plantId: number) {
+    try {
+      const response = await fetch("http://localhost:5000/addUserPlant", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ plantId }),
       });
 
-      sessionStorage.setItem("savedPlants", JSON.stringify(existingPlants));
+      if (response.ok) {
+        console.log("Plant added successfully");
+        navigate("/myplants");
+      } else {
+        console.error("Failed to add plant:", response.status);
+      }
+    } catch (error) {
+      console.error("Error adding plant:", error);
+    }
+  }
 
-      navigate("/myplants");
+  const keepPlant = () => {
+    if (plantID !== null) {
+      addUserPlant(plantID);
     }
   };
 
@@ -272,13 +279,14 @@ function UploadPage({ email, name }: Props) {
             </Button>
 
             {plantID !== null && (
-                <Box mt={4}>
-                  <Typography variant="h6" fontWeight="bold">
-                    Your plant has been identified as{" "}
-                    {plantData[plantID].commonName}
-                  </Typography>
-                </Box>
-              ) && <Button onClick={() => keepPlant()}>Keep Plant</Button>}
+              <Box mt={4}>
+                <Typography variant="h6" fontWeight="bold">
+                  Your plant has been identified as{" "}
+                  {plantData[plantID].commonName}
+                </Typography>
+                <Button onClick={keepPlant}>Keep Plant</Button>
+              </Box>
+            )}
           </CardContent>
         </Card>
       </Box>
