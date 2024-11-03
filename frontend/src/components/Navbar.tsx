@@ -104,8 +104,7 @@ const Navbar = ({ email, name }: Props) => {
                 <MenuItem onClick={handleClose}>{email}</MenuItem>
                 <MenuItem
                   onClick={() => {
-                    // Handle log out functionality here
-                    handleClose();
+                    window.location.href = "/logout"
                   }}
                 >
                   Log Out
