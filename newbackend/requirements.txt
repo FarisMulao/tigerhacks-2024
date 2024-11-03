@@ -5,4 +5,4 @@ authlib>=1.0
 requests>=2.27.1
 Pillow
 cffi
-
+mysql-connector-python
