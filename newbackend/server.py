@@ -124,7 +124,7 @@ def getUserPlants():
         plants["plantid"] = plant[0]
         plants["planttype"] = plant[1]
         plants["startdate"] = plant[2]
-        plantsData['plantData'].append(plants)
+        plantData['plantData'].append(plants)
     return plantData, 200
 
 @app.route('/addUserPlant', methods=['POST'])
