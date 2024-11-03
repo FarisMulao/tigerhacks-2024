@@ -7,6 +7,7 @@ import LogInPage from "./pages/LogInPage";
 import UploadPage from "./pages/UploadPage";
 import ProfilePage from "./pages/ProfilePage";
 import { useEffect, useState } from "react";
+import Navbar from "./components/Navbar";
 
 function App() {
   const [user, setUser] = useState<any | null>(null);
@@ -53,6 +54,7 @@ function App() {
 
   return (
     <div className="App">
+      {false && <Navbar email={userInfo?.email} name={userInfo?.name}></Navbar>}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/index.html" element={<Navigate to="/" />} />

@@ -184,14 +184,6 @@ function UploadPage({ email, name }: Props) {
               fontWeight="bold"
               gutterBottom
             >
-              {name} and {email}
-            </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              fontWeight="bold"
-              gutterBottom
-            >
               Upload an Image
             </Typography>
 
