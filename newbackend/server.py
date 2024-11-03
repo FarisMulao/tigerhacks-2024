@@ -35,7 +35,7 @@ oauth.register(
 )
 
 
-# Controllers API
+
 @app.route("/")
 def home():
     return str(session.get("user")), 200
@@ -50,8 +50,8 @@ def home():
 def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
-    return str(session.get("user")['userinfo']), 200
-    #return redirect("/")
+    #return str(session.get("user")['userinfo']), 200
+    return redirect("/")
 
 
 @app.route("/login")
@@ -76,6 +76,19 @@ def logout():
             quote_via=quote_plus,
         )
     )
+
+@app.route('/getUserInfo', methods=['GET'])
+def getUserInfo():
+    userData = {}
+    try:
+        sessionData = session.get("user")['userinfo']
+        userData['name'] = sessionData['nickname']
+        userData['email'] = sessionData['name']
+        return userData, 200
+    except Exception as e:
+        print(e)
+        return "", 204
+    
 
 @app.route('/upload', methods=['POST'])
 def uploadImage():
