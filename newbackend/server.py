@@ -110,9 +110,10 @@ def getUserPlants():
         return "", 403
     try:
         cursor = mydb.cursor()
-        cursor.execute("SELECT (plantid, planttype, startdate) FROM plantList WHERE email = %s", email)
+        cursor.execute("SELECT plantid, planttype, startdate FROM plantList WHERE email = %s", [email])
         data = cursor.fetchall()
-    except:
+    except Exception as e:
+        print(e)
         return "database error", 500
     if len(data) == 0:
         return "", 204
@@ -134,11 +135,11 @@ def addUserPlant():
         return "", 403
         
     try:
-        form = request.form
-        formKeys = form.keys()
-        if not ("planttype" in formKeys):
+        data = request.get_json()
+        print(data)
+        if not ("plantId" in data.keys()):
             return "Invalid input", 400
-        planttype = form['planttype']
+        planttype = data['plantId']
     except:
         return "", 500
     
@@ -146,10 +147,14 @@ def addUserPlant():
         return "Invalid input, none", 400
     
     try:
+        print(str(email))
         cursor = mydb.cursor()
-        cursor.execute("INSERT INTO plantlist (email, planttype, startdate, plantid) VALUES (%s, %s, NOW(), UUID())", email, planttype)
+        cursor.execute("INSERT INTO plantlist (email, planttype, startdate, plantid) VALUES (%s, %s, NOW(), UUID())", (str(email), planttype))
         mydb.commit()
+        return "", 200
     except Exception as e:
+        print(e)
+        mydb.rollback()
         return "database error", 500
 
 @app.route('/uploadimage', methods=['POST'])
