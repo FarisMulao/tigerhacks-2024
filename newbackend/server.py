@@ -50,7 +50,8 @@ def home():
 def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
-    return redirect("/")
+    return str(session.get("user")['userinfo']), 200
+    #return redirect("/")
 
 
 @app.route("/login")
